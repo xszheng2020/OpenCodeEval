@@ -103,7 +103,11 @@ def main():
             max_workers = args.num_workers,
             desc = "Evaluating Solutions"
         )
-        evaluations = sorted(evaluations, key = lambda x: (x['task_id'], x['completion_id']))
+        # print('evaluations:', evaluations)
+        if args.task=='BigCodeBench':
+            evaluations = sorted(evaluations, key = lambda x: (x['task_id'], x['solution_id']))
+        else:
+            evaluations = sorted(evaluations, key = lambda x: (x['task_id'], x['completion_id']))
         write_jsonl(os.path.join(save_path, "evaluations.jsonl"), evaluations)
 
     # calculate pass@k
